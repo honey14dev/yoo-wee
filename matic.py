@@ -70,7 +70,7 @@ GCASH_PHONE = "09306113595"
 WEBSITE_URL = "http://localhost:8000"
 
 # Admin password (change this!)
-ADMIN_PASSWORD = "yooweediner"
+ADMIN_PASSWORD = "admin123"  # Change this to a secure password
 
 @app.before_request
 def before_request():
