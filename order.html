@@ -233,8 +233,31 @@
       justify-content: space-between;
     }
 
+    .qty-stepper {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .qty-btn {
+      width: 30px;
+      height: 30px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: #fff6e7;
+      color: var(--navy);
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1;
+      font-size: 1rem;
+    }
+
+    .qty-btn:hover {
+      background: #ffe7c3;
+    }
+
     .qty-input {
-      width: 92px;
+      width: 56px;
       text-align: center;
       font-weight: 700;
       border-radius: 10px;
@@ -321,44 +344,44 @@
       <div class="category-block">
         <h3 class="category-title">Starters</h3>
         <div class="menu-grid">
-          <article class="menu-item"><h3>Mac N' Chiz</h3><p>Classic starter with creamy cheese sauce and rich cheesy comfort in every bite.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Mac N' Chiz" data-price="90" /><span class="price-tag">₱90</span></div></article>
-          <article class="menu-item"><h3>Potato Chips</h3><p>Simple, crunchy, and great for sharing with the whole table.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Potato Chips" data-price="80" /><span class="price-tag">₱80</span></div></article>
-          <article class="menu-item"><h3>Cajun Fries</h3><p>Golden fries with a bold Cajun kick and a diner-style finish.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Cajun Fries" data-price="120" /><span class="price-tag">₱120</span></div></article>
-          <article class="menu-item"><h3>Cheesy Butter Corn</h3><p>Sweet corn topped with buttery goodness and melted cheese.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Cheesy Butter Corn" data-price="75" /><span class="price-tag">₱75</span></div></article>
-          <article class="menu-item"><h3>Fries Overload</h3><p>Extra-loaded fries for a hearty, shareable snack time treat.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Fries Overload" data-price="199" /><span class="price-tag">₱199</span></div></article>
-          <article class="menu-item"><h3>Cheesy Jalapeño</h3><p>Cheesy, spicy, and made for customers who love a bigger kick.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Cheesy Jalapeño" data-price="120" /><span class="price-tag">₱120</span></div></article>
+          <article class="menu-item"><h3>Mac N' Chiz</h3><p>Classic starter with creamy cheese sauce and rich cheesy comfort in every bite.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Mac N' Chiz quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Mac N' Chiz" data-price="90" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Mac N' Chiz quantity">+</button></div><span class="price-tag">₱90</span></div></article>
+          <article class="menu-item"><h3>Potato Chips</h3><p>Simple, crunchy, and great for sharing with the whole table.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Potato Chips quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Potato Chips" data-price="80" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Potato Chips quantity">+</button></div><span class="price-tag">₱80</span></div></article>
+          <article class="menu-item"><h3>Cajun Fries</h3><p>Golden fries with a bold Cajun kick and a diner-style finish.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Cajun Fries quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Cajun Fries" data-price="120" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Cajun Fries quantity">+</button></div><span class="price-tag">₱120</span></div></article>
+          <article class="menu-item"><h3>Cheesy Butter Corn</h3><p>Sweet corn topped with buttery goodness and melted cheese.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Cheesy Butter Corn quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Cheesy Butter Corn" data-price="75" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Cheesy Butter Corn quantity">+</button></div><span class="price-tag">₱75</span></div></article>
+          <article class="menu-item"><h3>Fries Overload</h3><p>Extra-loaded fries for a hearty, shareable snack time treat.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Fries Overload quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Fries Overload" data-price="199" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Fries Overload quantity">+</button></div><span class="price-tag">₱199</span></div></article>
+          <article class="menu-item"><h3>Cheesy Jalapeño</h3><p>Cheesy, spicy, and made for customers who love a bigger kick.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Cheesy Jalapeño quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Cheesy Jalapeño" data-price="120" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Cheesy Jalapeño quantity">+</button></div><span class="price-tag">₱120</span></div></article>
         </div>
       </div>
 
       <div class="category-block">
         <h3 class="category-title">Buns n' Meat</h3>
         <div class="menu-grid">
-          <article class="menu-item"><h3>OMS Burger</h3><p>Signature diner burger with juicy patty and the house favorite taste.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="OMS Burger" data-price="130" /><span class="price-tag">₱130</span></div></article>
-          <article class="menu-item"><h3>Bacoms Burger</h3><p>Loaded with smoky bacon flavor for a richer bite.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Bacoms Burger" data-price="160" /><span class="price-tag">₱160</span></div></article>
-          <article class="menu-item"><h3>Cheesy OMS Burger</h3><p>A cheesier take on the diner classic with extra comfort.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Cheesy OMS Burger" data-price="145" /><span class="price-tag">₱145</span></div></article>
-          <article class="menu-item"><h3>Chicken Burger</h3><p>Simple, crispy, and evenly seasoned for a satisfying burger fix.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Chicken Burger" data-price="120" /><span class="price-tag">₱120</span></div></article>
-          <article class="menu-item"><h3>Double OMS Burger</h3><p>Big, bold, and extra filling with double layers of the diner favorite.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Double OMS Burger" data-price="180" /><span class="price-tag">₱180</span></div></article>
-          <article class="menu-item"><h3>Cheesy Chicken Burger</h3><p>Chicken burger elevated with a generous cheese finish.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Cheesy Chicken Burger" data-price="135" /><span class="price-tag">₱135</span></div></article>
+          <article class="menu-item"><h3>OMS Burger</h3><p>Signature diner burger with juicy patty and the house favorite taste.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease OMS Burger quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="OMS Burger" data-price="130" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase OMS Burger quantity">+</button></div><span class="price-tag">₱130</span></div></article>
+          <article class="menu-item"><h3>Bacoms Burger</h3><p>Loaded with smoky bacon flavor for a richer bite.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Bacoms Burger quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Bacoms Burger" data-price="160" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Bacoms Burger quantity">+</button></div><span class="price-tag">₱160</span></div></article>
+          <article class="menu-item"><h3>Cheesy OMS Burger</h3><p>A cheesier take on the diner classic with extra comfort.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Cheesy OMS Burger quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Cheesy OMS Burger" data-price="145" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Cheesy OMS Burger quantity">+</button></div><span class="price-tag">₱145</span></div></article>
+          <article class="menu-item"><h3>Chicken Burger</h3><p>Simple, crispy, and evenly seasoned for a satisfying burger fix.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Chicken Burger quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Chicken Burger" data-price="120" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Chicken Burger quantity">+</button></div><span class="price-tag">₱120</span></div></article>
+          <article class="menu-item"><h3>Double OMS Burger</h3><p>Big, bold, and extra filling with double layers of the diner favorite.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Double OMS Burger quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Double OMS Burger" data-price="180" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Double OMS Burger quantity">+</button></div><span class="price-tag">₱180</span></div></article>
+          <article class="menu-item"><h3>Cheesy Chicken Burger</h3><p>Chicken burger elevated with a generous cheese finish.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Cheesy Chicken Burger quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Cheesy Chicken Burger" data-price="135" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Cheesy Chicken Burger quantity">+</button></div><span class="price-tag">₱135</span></div></article>
         </div>
       </div>
 
       <div class="category-block">
         <h3 class="category-title">Rice Meal</h3>
         <div class="menu-grid">
-          <article class="menu-item"><h3>2pcs Burger Steak</h3><p>Classic rice meal with two burger steak servings and hearty sides.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="2pcs Burger Steak" data-price="150" /><span class="price-tag">₱150</span></div></article>
-          <article class="menu-item"><h3>Hungarian Sausage</h3><p>Richly seasoned sausage served with a satisfying rice meal feel.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Hungarian Sausage" data-price="160" /><span class="price-tag">₱160</span></div></article>
-          <article class="menu-item"><h3>2pcs Chicken Tenders</h3><p>Fried chicken tender meal with generous portions and comfort-food appeal.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="2pcs Chicken Tenders" data-price="150" /><span class="price-tag">₱150</span></div></article>
-          <article class="menu-item"><h3>Chicken Fillet</h3><p>Warm, crispy, and served as a dependable rice meal favorite.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Chicken Fillet" data-price="150" /><span class="price-tag">₱150</span></div></article>
+          <article class="menu-item"><h3>2pcs Burger Steak</h3><p>Classic rice meal with two burger steak servings and hearty sides.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease 2pcs Burger Steak quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="2pcs Burger Steak" data-price="150" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase 2pcs Burger Steak quantity">+</button></div><span class="price-tag">₱150</span></div></article>
+          <article class="menu-item"><h3>Hungarian Sausage</h3><p>Richly seasoned sausage served with a satisfying rice meal feel.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Hungarian Sausage quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Hungarian Sausage" data-price="160" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Hungarian Sausage quantity">+</button></div><span class="price-tag">₱160</span></div></article>
+          <article class="menu-item"><h3>2pcs Chicken Tenders</h3><p>Fried chicken tender meal with generous portions and comfort-food appeal.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease 2pcs Chicken Tenders quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="2pcs Chicken Tenders" data-price="150" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase 2pcs Chicken Tenders quantity">+</button></div><span class="price-tag">₱150</span></div></article>
+          <article class="menu-item"><h3>Chicken Fillet</h3><p>Warm, crispy, and served as a dependable rice meal favorite.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Chicken Fillet quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Chicken Fillet" data-price="150" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Chicken Fillet quantity">+</button></div><span class="price-tag">₱150</span></div></article>
         </div>
       </div>
 
       <div class="category-block">
         <h3 class="category-title">Overloads</h3>
         <div class="menu-grid">
-          <article class="menu-item"><h3>Yoo-Wee Signature Overload</h3><p>Mac n' Chiz, fries, chicken tenders, coleslaw, corn, and bacon bits in one loaded plate.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Yoo-Wee Signature Overload" data-price="250" /><span class="price-tag">₱250</span></div></article>
-          <article class="menu-item"><h3>Bacon Overload</h3><p>Loaded with bacon bits, fries, and creamy mac for a bold overload.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Bacon Overload" data-price="225" /><span class="price-tag">₱225</span></div></article>
-          <article class="menu-item"><h3>Cheesy Corn Overload</h3><p>Overload packed with corn, cheese, fries, and chicken tenders.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Cheesy Corn Overload" data-price="230" /><span class="price-tag">₱230</span></div></article>
-          <article class="menu-item"><h3>Cheese Burger Overload</h3><p>Ground beef, cheese, bacon bits, mac n' chiz, and fries all in one serving.</p><div class="menu-actions"><input class="qty-input" type="number" min="0" value="0" data-name="Cheese Burger Overload" data-price="230" /><span class="price-tag">₱230</span></div></article>
+          <article class="menu-item"><h3>Yoo-Wee Signature Overload</h3><p>Mac n' Chiz, fries, chicken tenders, coleslaw, corn, and bacon bits in one loaded plate.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Yoo-Wee Signature Overload quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Yoo-Wee Signature Overload" data-price="250" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Yoo-Wee Signature Overload quantity">+</button></div><span class="price-tag">₱250</span></div></article>
+          <article class="menu-item"><h3>Bacon Overload</h3><p>Loaded with bacon bits, fries, and creamy mac for a bold overload.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Bacon Overload quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Bacon Overload" data-price="225" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Bacon Overload quantity">+</button></div><span class="price-tag">₱225</span></div></article>
+          <article class="menu-item"><h3>Cheesy Corn Overload</h3><p>Overload packed with corn, cheese, fries, and chicken tenders.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Cheesy Corn Overload quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Cheesy Corn Overload" data-price="230" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Cheesy Corn Overload quantity">+</button></div><span class="price-tag">₱230</span></div></article>
+          <article class="menu-item"><h3>Cheese Burger Overload</h3><p>Ground beef, cheese, bacon bits, mac n' chiz, and fries all in one serving.</p><div class="menu-actions"><div class="qty-stepper"><button class="qty-btn" type="button" data-step="minus" aria-label="Decrease Cheese Burger Overload quantity">-</button><input class="qty-input" type="number" min="0" value="0" data-name="Cheese Burger Overload" data-price="230" /><button class="qty-btn" type="button" data-step="plus" aria-label="Increase Cheese Burger Overload quantity">+</button></div><span class="price-tag">₱230</span></div></article>
         </div>
       </div>
 
@@ -368,25 +391,43 @@
 
   <script>
     const qtyInputs = document.querySelectorAll('.qty-input');
+    const qtyButtons = document.querySelectorAll('.qty-btn');
+
+    function persistOrderSelection() {
+      const chosen = [];
+      let subtotal = 0;
+
+      qtyInputs.forEach((item) => {
+        const qty = Math.max(0, Number(item.value || 0));
+        item.value = qty;
+        if (qty > 0) {
+          const price = Number(item.dataset.price || 0);
+          const lineTotal = qty * price;
+          subtotal += lineTotal;
+          chosen.push({ name: item.dataset.name, qty, total: lineTotal });
+        }
+      });
+
+      localStorage.setItem('yooWeeOrder', JSON.stringify({ items: chosen, subtotal: subtotal }));
+    }
 
     qtyInputs.forEach((input) => {
-      input.addEventListener('input', () => {
-        const chosen = [];
-        let subtotal = 0;
+      input.addEventListener('input', persistOrderSelection);
+      input.addEventListener('change', persistOrderSelection);
+    });
 
-        qtyInputs.forEach((item) => {
-          const qty = Number(item.value || 0);
-          if (qty > 0) {
-            const price = Number(item.dataset.price || 0);
-            const lineTotal = qty * price;
-            subtotal += lineTotal;
-            chosen.push({ name: item.dataset.name, qty, total: lineTotal });
-          }
-        });
-
-        localStorage.setItem('yooWeeOrder', JSON.stringify({ items: chosen, subtotal: subtotal }));
+    qtyButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const wrapper = button.closest('.qty-stepper');
+        const input = wrapper.querySelector('.qty-input');
+        const currentQty = Math.max(0, Number(input.value || 0));
+        const nextQty = button.dataset.step === 'plus' ? currentQty + 1 : Math.max(0, currentQty - 1);
+        input.value = nextQty;
+        persistOrderSelection();
       });
     });
+
+    persistOrderSelection();
   </script>
 </body>
 </html>
