@@ -305,6 +305,39 @@
     .payment-box h3 { margin: 0 0 12px; color: var(--red); font-size: 1.05rem; }
     .note { margin-top: 8px; font-size: 0.83rem; color: var(--muted); }
 
+    .gcash-box {
+      display: none;
+      margin-top: 14px;
+      padding: 14px;
+      border: 2px dashed var(--line);
+      border-radius: 12px;
+      background: #fff8ee;
+      text-align: center;
+    }
+
+    .gcash-box.show {
+      display: block;
+    }
+
+    .gcash-qr {
+      width: 180px;
+      height: 180px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 6px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    .gcash-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 6px 0 0;
+    }
+
     .cta {
       width: 100%;
       border: none;
@@ -466,6 +499,18 @@
             </div>
           </div>
 
+          <div class="payment-box gcash-box" id="gcashBox">
+            <h3>Pay via GCash</h3>
+            <img
+              class="gcash-qr"
+              id="gcashQr"
+              src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=GCASH%3A09306113595"
+              alt="GCash QR code for Yoo-Wee Diner"
+            />
+            <p class="gcash-number">GCash Number: 09306113595</p>
+            <p class="note">Scan the QR code, send your payment, then enter the reference number above before confirming.</p>
+          </div>
+
           <button class="cta" type="submit">Confirm Order</button>
           <div class="success" id="successMsg">Order details saved successfully.</div>
         </form>
@@ -480,11 +525,15 @@
     const orderList = document.getElementById('orderList');
     const paymentMethod = document.getElementById('paymentMethod');
     const referenceInput = document.getElementById('reference');
+    const gcashBox = document.getElementById('gcashBox');
+    const gcashQr = document.getElementById('gcashQr');
     const deliveryFee = 40;
     const serviceCharge = 20;
     const dinerGcashNumber = '09306113595';
     const gcashReferencePattern = /^[A-Za-z0-9][A-Za-z0-9\- ]{5,}$/;
-    const backendUrl = 'http://localhost:5001'; // Changed to port 5001
+    const backendUrl = window.location.protocol === 'file:'
+      ? 'http://localhost:5001'
+      : `${window.location.protocol}//${window.location.hostname || 'localhost'}:5001`;
 
     const savedOrderData = JSON.parse(localStorage.getItem('yooWeeOrder') || 'null');
     let order = null;
@@ -522,62 +571,35 @@
       return subtotal + deliveryFee + serviceCharge;
     }
 
-    async function initiateGcashPayment(customerData) {
-      const total = getOrderTotal();
-      
-      try {
-        // Send order data to backend to create GCash payment link
-        const response = await fetch(`${backendUrl}/create-gcash-payment`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            amount: total,
-            customerName: customerData.name,
-            phone: customerData.phone,
-            address: customerData.address,
-            notes: customerData.notes,
-            items: order || []
-          })
-        });
-
-        const data = await response.json();
-        
-        if (data.success && data.paymentUrl) {
-          // Store order details in sessionStorage for callback
-          sessionStorage.setItem('pendingOrder', JSON.stringify(customerData));
-          sessionStorage.setItem('orderItems', JSON.stringify(order));
-          
-          // Redirect to GCash payment
-          window.location.href = data.paymentUrl;
-        } else {
-          successMsg.textContent = 'Error creating payment. Please try again.';
-          successMsg.classList.add('show');
-        }
-      } catch (error) {
-        console.error('Payment error:', error);
-        successMsg.textContent = 'Payment service unavailable. Please try again later.';
-        successMsg.classList.add('show');
-      }
-    }
-
-    function openGcashApp() {
-      const total = getOrderTotal();
-      const gcashUrl = `https://www.gcash.com/?amount=${total}&receiver=${encodeURIComponent(dinerGcashNumber)}`;
-      window.open(gcashUrl, '_blank');
+    function cacheOrderLocally(customerData, total, source = 'offline') {
+      const existing = JSON.parse(localStorage.getItem('yooWeeLocalOrders') || '[]');
+      const localOrder = {
+        orderId: `LOCAL-${Date.now()}`,
+        customer: customerData,
+        items: order || [],
+        total: total,
+        paymentMethod: customerData.method,
+        status: 'pending',
+        createdAt: new Date().toISOString(),
+        source: source
+      };
+      existing.unshift(localOrder);
+      localStorage.setItem('yooWeeLocalOrders', JSON.stringify(existing));
+      return localOrder;
     }
 
     renderSummary(order);
 
     paymentMethod.addEventListener('change', function () {
-      const referenceField = referenceInput.closest('.field');
+      const total = getOrderTotal();
+      const qrData = `GCASH:${dinerGcashNumber}|AMOUNT:${total}`;
+      gcashQr.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(qrData)}`;
       
       if (this.value === 'GCash') {
-        // For GCash, hide the reference field - it's auto-handled
-        referenceField.style.display = 'none';
-        referenceInput.required = false;
+        gcashBox.classList.add('show');
+        referenceInput.required = true;
       } else {
-        // For Cash on Delivery, show and make optional
-        referenceField.style.display = 'flex';
+        gcashBox.classList.remove('show');
         referenceInput.required = false;
       }
     });
@@ -590,6 +612,7 @@
       const address = document.getElementById('address').value.trim();
       const notes = document.getElementById('notes').value.trim();
       const selectedMethod = paymentMethod.value;
+      const reference = referenceInput.value.trim();
 
       // Validate required fields
       if (!customerName) {
@@ -608,24 +631,25 @@
         return;
       }
 
+      if (selectedMethod === 'GCash' && !reference) {
+        successMsg.textContent = 'Please enter your GCash reference number after payment.';
+        successMsg.classList.add('show');
+        return;
+      }
+
       const customerData = {
         name: customerName,
         phone: phone,
         address: address,
         notes: notes,
-        method: selectedMethod
+        method: selectedMethod,
+        reference: reference
       };
 
-      if (selectedMethod === 'GCash') {
-        // Initiate GCash payment flow
-        initiateGcashPayment(customerData);
-      } else {
-        // Cash on Delivery - save order immediately
-        saveOrder(customerData);
-      }
+      saveOrder(customerData);
     });
 
-    function saveOrder(customerData) {
+    async function saveOrder(customerData) {
       const total = getOrderTotal();
       
       // Show loading state
@@ -633,7 +657,7 @@
       successMsg.classList.add('show');
       
       try {
-        fetch(`${backendUrl}/save-order`, {
+        const response = await fetch(`${backendUrl}/save-order`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -643,51 +667,31 @@
             paymentMethod: customerData.method,
             status: 'confirmed'
           })
-        }).then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          return response.json();
-        })
-          .then(data => {
-            if (data.success) {
-              successMsg.textContent = 'Order confirmed successfully! Order #' + data.orderId;
-              successMsg.classList.add('show');
-              localStorage.removeItem('yooWeeOrder');
-              sessionStorage.clear();
-            } else {
-              successMsg.textContent = 'Error saving order: ' + (data.error || 'Unknown error');
-              successMsg.classList.add('show');
-            }
-          })
-          .catch(error => {
-            console.error('Order error:', error);
-            successMsg.textContent = 'Order confirmed (local). Check your orders!';
-            successMsg.classList.add('show');
-            localStorage.removeItem('yooWeeOrder');
-          });
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.success) {
+          successMsg.textContent = 'Order confirmed successfully! Order #' + data.orderId;
+          successMsg.classList.add('show');
+          localStorage.removeItem('yooWeeOrder');
+          sessionStorage.clear();
+        } else {
+          throw new Error(data.error || 'Unknown backend error');
+        }
       } catch (error) {
         console.error('Error:', error);
-        successMsg.textContent = 'Order confirmed successfully!';
+        cacheOrderLocally(customerData, total);
+        successMsg.textContent = 'Backend unavailable. Order saved locally and visible in Admin on this device.';
         successMsg.classList.add('show');
         localStorage.removeItem('yooWeeOrder');
       }
     }
 
-    // Check if returning from successful payment
-    function checkPaymentStatus() {
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('payment') === 'success') {
-        const pendingOrder = sessionStorage.getItem('pendingOrder');
-        if (pendingOrder) {
-          const customerData = JSON.parse(pendingOrder);
-          customerData.method = 'GCash';
-          saveOrder(customerData);
-        }
-      }
-    }
-
-    checkPaymentStatus();
+    paymentMethod.dispatchEvent(new Event('change'));
   </script>
 </body>
 </html>
